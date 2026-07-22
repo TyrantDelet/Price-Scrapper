@@ -1,8 +1,12 @@
-# Projeto: Rastreador de preços de produtos 
+# PRD - 001: Price Scrapper (Rastreador de Preços) 
 
-### Autor: Arthur Kayky Carvalho Silva
+**Status:** Em desenvolvimento
 
-### Data de Revisão: 22/07/2026
+**Autor:** Arthur Kayky Carvalho Silva
+
+**Revisor:** [Victor Hugo "Katomaro" Carvalho Dos Reis Santos](https://github.com/katomaro) 
+
+**Data:** 22/07/2026
 
 ## Visão geral e objetivo
 
