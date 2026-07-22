@@ -42,3 +42,11 @@ O projeto será considerado concluido na versão 1.0 quando:
 
 Como para esta versão estamos lidando com dados manuais, não é previsto a existência de edge cases.
 
+## Fora de escopo deste planejamento
+
+Para manter o foco e garantir a entrega dos itens acima definidos, estão vetados desta versão: 
+
+- Interface gráfica. Tudo será feito via CLI e scripts automatizados. 
+- Escaneamento e extração de dados de sites de terceiros.
+
+ 
