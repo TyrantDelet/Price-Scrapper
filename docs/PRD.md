@@ -29,3 +29,12 @@ O que é **ESTRITAMENTE** necessário para versão 1.0:
 - Definir queries SQL não bloqueantes de inserção, atualização e exclusão de dados garantindo a integridade 
 - Estruturação de queries que são utilizadas para dispor dados aos usuários
 
+## Critérios de aceitação (Definition of done)
+
+O projeto será considerado concluido na versão 1.0 quando: 
+- [ ] O projeto execute o setup sem nenhum erro de dependência ou de sintaxe.
+- [ ] O programa conseguir tratar conversões de dados diferentes (TypeCasting) para inserção no banco de dados ignorando caracteres como símbolos monetários etc.
+- [ ] O schema SQL estiver aceitando dados abstraídos consolidados para suportar múltiplas fontes.
+- [ ] Estruturação de queries para dados a usuários com sanitização contra SQL injection.
+- [ ] Execução de teste de entrega de dados atendendo a história dos usuários.
+
