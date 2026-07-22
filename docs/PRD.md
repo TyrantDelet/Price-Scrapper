@@ -38,3 +38,7 @@ O projeto será considerado concluido na versão 1.0 quando:
 - [ ] Estruturação de queries para dados a usuários com sanitização contra SQL injection.
 - [ ] Execução de teste de entrega de dados atendendo a história dos usuários.
 
+## Edge cases e tratamentos
+
+Como para esta versão estamos lidando com dados manuais, não é previsto a existência de edge cases.
+
