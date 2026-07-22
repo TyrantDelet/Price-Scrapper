@@ -18,3 +18,14 @@
 
 **História 03:** Como usuário eu quero comparar preços atuais de produtos juntamente com seus históricos para que eu exerça a melhor tomada de decisão em custo benefício.
 
+
+## Escopo do MVP (Produto Mínimo Viável)
+
+O que é **ESTRITAMENTE** necessário para versão 1.0:
+
+- Definir o arquivo `.env` com variáveis para deploy do aplicativo
+- Definir `requirements.txt` travado com versionamento para `Python 3.12`
+- Definir o esquema de dados SQL inicial que a aplicação vai utilizar
+- Definir queries SQL não bloqueantes de inserção, atualização e exclusão de dados garantindo a integridade 
+- Estruturação de queries que são utilizadas para dispor dados aos usuários
+
