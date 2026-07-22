@@ -10,3 +10,11 @@
 
 **A solução:** Um programa em python que faz a indexação de produtos gerais em diversos marketplaces para facilitar a busca pela melhor oferta para o usuário. Se o preço cair abaixo de um limite pré-estabelecido o sistema cria um alerta de preço.
 
+## Casos de uso (User Stories)
+
+**História 01:** Como usuário eu quero fornecer o SKU (ou URL/ID única de um marketplace), junto de um preço máximo que eu aceito pagar, para que o sistema possa me alertar.
+
+**História 02:** Como usuário eu quero acessar o histórico de preços de um determinado produto com a exibição de dados de um marketplace responsável ou código promocional.
+
+**História 03:** Como usuário eu quero comparar preços atuais de produtos juntamente com seus históricos para que eu exerça a melhor tomada de decisão em custo benefício.
+
