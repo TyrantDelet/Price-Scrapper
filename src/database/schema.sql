@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS manufacturer (
 
 CREATE TABLE IF NOT EXISTS product (
     id INTEGER PRIMARY KEY,
+    external_id VARCHAR(500) UNIQUE,
     name VARCHAR(500) NOT NULL,
     model VARCHAR(256) NOT NULL,
     manufacturer VARCHAR(256) NOT NULL,
