@@ -49,9 +49,9 @@ class ProductRepository:
         query = "INSERT INTO manufacturer (name, id) VALUES (?, ?)"
         self.db.execute(query, (name, id))
 
-    def add_product(self, id: int, name: str, model: str, manufacturer: str, marketplace: str, color: str, category: str):
-        query = "INSERT INTO product (id, name, model, manufacturer, marketplace, color, category) VALUES (?, ?, ?, ?, ?, ?, ?)"
-        self.db.execute(query, (id, name, model, manufacturer, marketplace, color, category))
+    def add_product(self,  id: int, external_id: str, name: str, model: str, manufacturer: str, marketplace: str, color: str, category: str):
+        query = "INSERT INTO product (id, external_id, name, model, manufacturer, marketplace, color, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        self.db.execute(query, (id, external_id, name, model, manufacturer, marketplace, color, category))
 
     def add_product_price(self, id: int, price: float, date: str, manufacturer: str, marketplace: str):
         query = "INSERT INTO product_price (id, price, date, manufacturer, marketplace) VALUES (?, ?, ?, ?, ?)"
@@ -94,11 +94,11 @@ if __name__ == "__main__":
         db = CreateDatabase(db_file_path='database.db', schema_file_path=str(Path(__file__).parent / 'schema.sql'))
         product_repo = ProductRepository(db)
 
-        product_repo.add_marketplace(name="Example_MP", id=1, url="https://www.example.com")
+        product_repo.add_marketplace(name="Example_MP", id=1, url="https://www.marketplace.com")
         product_repo.add_manufracturer(name="Example_Manufacturer", id=1)
-        product_repo.add_product(id=1, name="Example_Product", model="AQL123", manufacturer="Example_Manufracturer", marketplace="Example_MP", color="Black", category="Random")
+        product_repo.add_product(id=1,external_id="EXT001", name="Example_Product", model="AQL123", manufacturer="Example_Manufracturer", marketplace="Example_MP", color="Black", category="Random")
         product_repo.add_product_price(id=1, price=999.99, date="2023-10-01", manufacturer="Example_Manufracturer", marketplace="Example_MP")
-        product_repo.add_url(product_url="https://www.example.com", marketplace_url="https://www.example.com", product_sku="B09G9F5C6K", product_id=1)
+        product_repo.add_url(product_url="https://www.example.com", marketplace_url="https://www.marketplace.com", product_sku="B09G9F5C6K", product_id=1)
 
         print("All Products:")
         for product in product_repo.get_all_products():
