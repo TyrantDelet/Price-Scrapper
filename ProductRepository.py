@@ -25,13 +25,13 @@ except sqlite3.Error as e:
 try:
     cur.execute(
         "INSERT INTO products (product_name, product_price, product_url) VALUES (?, ?, ?)",
-        ("Computador", 5.50, "https://example.com/computador")
+        ("Personal Computer", 5.50, "https://example.com/computer")
     )
 
     products = [
-        ("Caneta", 1.20, "https://example.com/caneta"),
-        ("Mochila", 45.00, "https://example.com/mochila"),
-        ("Borracha", 0.75, "https://example.com/borracha"),
+        ("Pen", 1.20, "https://example.com/pen"),
+        ("Backpack", 45.00, "https://example.com/backpack"),
+        ("Eraser", 0.75, "https://example.com/eraser"),
     ]
     cur.executemany(
         "INSERT INTO products (product_name, product_price, product_url) VALUES (?, ?, ?)",
