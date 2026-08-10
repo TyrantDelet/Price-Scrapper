@@ -40,7 +40,7 @@ class ProductRepository:
 
 
 
-    def add_manufracturer(self, id: int, name: str):
+    def add_manufacturer(self, id: int, name: str):
         query = "INSERT INTO manufacturer (id, name) VALUES (?, ?)"
         self.db.connection.execute(query, (id, name, ))
         self.db.disconnect()
@@ -307,7 +307,7 @@ if __name__ == "__main__":
         product_repo = ProductRepository(db)
 
         product_repo.add_marketplace(1234, "ExampleMarketplace", "https://www.example.com")
-        product_repo.add_manufracturer(1234, "ExampleManufacturer")
+        product_repo.add_manufacturer(1234, "ExampleManufacturer")
         product_repo.add_category(1234, "ExampleCategory")
         product_repo.add_product(1234, "ExampleProduct", 1234)
         product_repo.add_product_variant(1234, 1234, "EX1234", "ExampleVariant", "ModelX", "Red", 10.0, 5.0, 1.0)

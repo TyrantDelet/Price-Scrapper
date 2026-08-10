@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS product_variant (
     size_width DECIMAL(10, 2),
     weight DECIMAL(10, 2),
     UNIQUE(product_id, variant_name, model, color, size_height, size_width, weight)
-)
+);
 
 CREATE TABLE IF NOT EXISTS product_price (
     id INTEGER PRIMARY KEY,
@@ -48,3 +48,4 @@ CREATE TABLE IF NOT EXISTS product_url (
     external_product_id VARCHAR(500) NOT NULL REFERENCES product(external_id),
     product_id INTEGER NOT NULL REFERENCES product(id)
 );
+
