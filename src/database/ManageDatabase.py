@@ -19,8 +19,11 @@ class ManageDatabase:
         self.cursor = self.connection.cursor()
 
     def disconnect(self):
-        self.connection.commit()
-        self.connection.close()
+        try:
+            if hasattr(self, 'connection') and self.connection:
+                self.connection.commit()
+        except sqlite3.ProgrammingError:
+            pass
 
     def _initialize_schema(self):
         with open(self.schema_file_path, 'r', encoding='utf-8') as f:
