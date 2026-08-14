@@ -5,74 +5,6 @@ class ProductRepository:
         self.db = db
 
 
-    def add_marketplace(self, id: int, name: str, url: str):
-        query = "INSERT INTO marketplace (id, name, url) VALUES (?, ?, ?)"
-        self.db.connection.execute(query, (id, name, url ))
-        self.db.disconnect()
-
-    def get_marketplace(self, id: int, name: str):
-        if id is not None and name is not None:
-            query = "SELECT * FROM marketplace WHERE id = UPPER(?) and UPPER(name) = UPPER(?)"
-        elif id is not None:
-            query = "SELECT * FROM marketplace WHERE id = ?"
-        elif name is not None:
-            query = "SELECT * FROM marketplace WHERE name = ?"
-        else:
-            raise ValueError("Either 'id' or 'name' must be provided.")
-        result = self.db.connection.execute(query, (id or name,))
-        self.db.disconnect()
-        return result if result else None
-
-    def get_all_marketplaces(self):
-        query = "SELECT * FROM marketplace"
-        return self.db.fetchall(query)
-
-    def update_marketplace(self, id: int, name: str):
-        query = "UPDATE marketplace SET name = ? WHERE id = ?"
-        self.db.connection.execute(query, (name, id ))
-        self.db.disconnect()
-
-    def delete_marketplace(self, id: int, name: str):
-        query = "DELETE FROM marketplace WHERE id = ? AND name = ?"
-        self.db.connection.execute(query, (id, name ))
-        self.db.disconnect()
-
-
-
-    def add_manufacturer(self, id: int, name: str):
-        query = "INSERT INTO manufacturer (id, name) VALUES (?, ?)"
-        self.db.connection.execute(query, (id, name, ))
-        self.db.disconnect()
-
-    def get_manufacturer(self, id: int, name: str):
-        if id is not None and name is not None:
-            query = "SELECT * FROM manufacturer WHERE id = UPPER(?) and UPPER(name) = UPPER(?)"
-        elif id is not None:
-            query = "SELECT * FROM manufacturer WHERE id = ?"
-        elif name is not None:
-            query = "SELECT * FROM manufacturer WHERE name = ?"
-        else:
-            raise ValueError("Either 'id' or 'name' must be provided.")
-        result = self.db.connection.execute(query, (id or name,))
-        self.db.disconnect()
-        return result if result else None
-
-    def get_all_manufacturers(self):
-        query = "SELECT * FROM manufacturer"
-        return self.db.fetchall(query)
-
-    def update_manufacturer(self, id: int, name: str):
-        query = "UPDATE manufacturer SET name = ? WHERE id = ?"
-        self.db.connection.execute(query, (name, id))
-        self.db.disconnect()
-
-    def delete_manufacturer(self, id: int, name: str):
-        query = "DELETE FROM manufacturer WHERE id = ? AND name = ?"
-        self.db.connection.execute(query, (id, name))
-        self.db.disconnect()
-
-
-
     def add_category(self, id: int, name: str):
         query = "INSERT INTO category (id, name) VALUES (?, ?)"
         self.db.connection.execute(query, (id, name))
@@ -305,8 +237,6 @@ if __name__ == "__main__":
         db = ManageDatabase(db_file_path='./src/database/database.db', schema_file_path='./src/database/schema.sql')
         product_repo = ProductRepository(db)
 
-        product_repo.add_marketplace(1234, "ExampleMarketplace", "https://www.example.com")
-        product_repo.add_manufacturer(1234, "ExampleManufacturer")
         product_repo.add_category(1234, "ExampleCategory")
         product_repo.add_product(1234, "ExampleProduct", 1234)
         product_repo.add_product_variant(1234, 1234, "EX1234", "ExampleVariant", "ModelX", "Red", 10.0, 5.0, 1.0)
