@@ -363,4 +363,7 @@ if __name__ == "__main__":
         for product in product_repo.get_all_products():
             print(product)
 
+        print("\nAll Product Variants:")
+        for variant in product_repo.get_all_product_variants(1234):
+            print(variant)
 
