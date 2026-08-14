@@ -10,31 +10,35 @@ class ProductRepository:
         self.db.connection.execute(query, (id, name))
         self.db.disconnect()
 
-    def get_category(self, id: int, name: str):
-        if id is not None and name is not None:
-            query = "SELECT * FROM category WHERE id = UPPER(?) and UPPER(name) = UPPER(?)"
-        elif id is not None:
-            query = "SELECT * FROM category WHERE id = ?"
-        elif name is not None:
-            query = "SELECT * FROM category WHERE name = ?"
-        else:
-            raise ValueError("Either 'id' or 'name' must be provided.")
-        result = self.db.connection.execute(query, (id or name,))
+    def get_category_by_id(self, id: int):
+        query = "SELECT * FROM category WHERE id = UPPER(?)"
+        result = self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_category_by_name(self, name: str):
+        query = "SELECT * FROM category WHERE name = UPPER(?)"
+        result = self.db.connection.execute(query, (name,))
         self.db.disconnect()
         return result if result else None
 
     def get_all_categories(self):
         query = "SELECT * FROM category"
-        return self.db.fetchall(query)
+        return self.db.fetchone(query)
 
     def update_category(self, id: int, name: str):
-        query = "UPDATE category SET name = ? WHERE id = ?"
+        query = "UPDATE category SET name = UPPER(?) WHERE id = UPPER(?)"
         self.db.connection.execute(query, (name, id))
         self.db.disconnect()
 
-    def delete_category(self, id: int, name: str):
-        query = "DELETE FROM category WHERE id = ? AND name = ?"
-        self.db.connection.execute(query, (id, name))
+    def delete_category_by_id(self, id: int):
+        query = "DELETE FROM category WHERE id = UPPER(?)"
+        self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+
+    def delete_category_by_name(self, name: str):
+        query = "DELETE FROM category WHERE name = UPPER(?)"
+        self.db.connection.execute(query, (name,))
         self.db.disconnect()
 
 
@@ -44,31 +48,35 @@ class ProductRepository:
         self.db.connection.execute(query, (id, name, category))
         self.db.disconnect()
 
-    def get_product(self, id: int, name: str):
-        if id is not None and name is not None:
-            query = "SELECT * FROM product WHERE id = UPPER(?) and UPPER(name) = UPPER(?)"
-        elif id is not None:
-            query = "SELECT * FROM product WHERE id = ?"
-        elif name is not None:
-            query = "SELECT * FROM product WHERE name = ?"
-        else:
-            raise ValueError("Either 'id' or 'name' must be provided.")
-        result = self.db.connection.execute(query, (id or name,))
+    def get_product_by_id(self, id: int):
+        query = "SELECT * FROM product WHERE id = UPPER(?)"
+        result = self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_by_name(self, name: str):
+        query = "SELECT * FROM product WHERE name = UPPER(?)"
+        result = self.db.connection.execute(query, (name,))
         self.db.disconnect()
         return result if result else None
 
     def get_all_products(self):
         query = "SELECT * FROM product"
-        return self.db.fetchall(query)
+        return self.db.fetchone(query)
 
     def update_product(self, id: int, name: str, category: int):
         query = "UPDATE product SET name = ?, category = ? WHERE id = ?"
         self.db.connection.execute(query, (name, category, id))
         self.db.disconnect()
 
-    def delete_product(self, id: int, name: str):
-        query = "DELETE FROM product WHERE id = ? AND name = ?"
-        self.db.connection.execute(query, (id, name))
+    def delete_product_by_id(self, id: int):
+        query = "DELETE FROM product WHERE id = UPPER(?)"
+        self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+
+    def delete_product_by_name(self, name: str):
+        query = "DELETE FROM product WHERE name = UPPER(?)"
+        self.db.connection.execute(query, (name,))
         self.db.disconnect()
 
 
@@ -78,52 +86,101 @@ class ProductRepository:
         self.db.connection.execute(query, (id, product_id, external_id, variant_name, model, color, size_height, size_width, weight))
         self.db.disconnect()
 
-    def get_product_variant(self, id: int, product_id: int, external_id: str, variant_name: str, model: str, color: str, size_height: float, size_width: float, weight: float):
-        if id is not None:
-            query = "SELECT * FROM product_variant WHERE id = ?"
-            result = self.db.connection.execute(query, (id,))
-        elif product_id is not None:
-            query = "SELECT * FROM product_variant WHERE product_id = ?"
-            result = self.db.connection.execute(query, (product_id,))
-        elif external_id is not None:
-            query = "SELECT * FROM product_variant WHERE external_id = ?"
-            result = self.db.connection.execute(query, (external_id,))
-        elif variant_name is not None:
-            query = "SELECT * FROM product_variant WHERE variant_name = ?"
-            result = self.db.connection.execute(query, (variant_name,))
-        elif model is not None:
-            query = "SELECT * FROM product_variant WHERE model = ?"
-            result = self.db.connection.execute(query, (model,))
-        elif color is not None:
-            query = "SELECT * FROM product_variant WHERE color = ?"
-            result = self.db.connection.execute(query, (color,))
-        elif size_height is not None:
-            query = "SELECT * FROM product_variant WHERE size_height = ?"
-            result = self.db.connection.execute(query, (size_height,))
-        elif size_width is not None:
-            query = "SELECT * FROM product_variant WHERE size_width = ?"
-            result = self.db.connection.execute(query, (size_width,))
-        elif weight is not None:
-            query = "SELECT * FROM product_variant WHERE weight = ?"
-            result = self.db.connection.execute(query, (weight,))
-        else:
-            raise ValueError("At least one parameter must be provided.")
-        
+    def get_product_variant_by_id(self, id: int):
+        query = "SELECT * FROM product_variant WHERE id = UPPER(?)"
+        result = self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_variant_by_external_id(self, external_id: str):
+        query = "SELECT * FROM product_variant WHERE external_id = UPPER(?)"
+        result = self.db.connection.execute(query, (external_id,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_variant_by_variant_name(self, variant_name: str):
+        query = "SELECT * FROM product_variant WHERE variant_name = UPPER(?)"
+        result = self.db.connection.execute(query, (variant_name,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_variant_by_model(self, model: str):
+        query = "SELECT * FROM product_variant WHERE model = UPPER(?)"
+        result = self.db.connection.execute(query, (model,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_variant_by_color(self, color: str):
+        query = "SELECT * FROM product_variant WHERE color = UPPER(?)"
+        result = self.db.connection.execute(query, (color,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_variant_by_size_height(self, size_height: float):
+        query = "SELECT * FROM product_variant WHERE size_height = ?"
+        result = self.db.connection.execute(query, (size_height,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_variant_by_size_width(self, size_width: float):
+        query = "SELECT * FROM product_variant WHERE size_width = ?"
+        result = self.db.connection.execute(query, (size_width,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_variant_by_weight(self, weight: float):
+        query = "SELECT * FROM product_variant WHERE weight = ?"
+        result = self.db.connection.execute(query, (weight,))
         self.db.disconnect()
         return result if result else None
 
     def get_all_product_variants(self):
         query = "SELECT * FROM product_variant"
-        return self.db.fetchall(query)
+        return self.db.fetchone(query)
 
     def update_product_variant(self, id: int, product_id: int, external_id: str, variant_name: str, model: str, color: str, size_height: float, size_width: float, weight: float):
         query = "UPDATE product_variant SET product_id = ?, external_id = ?, variant_name = ?, model = ?, color = ?, size_height = ?, size_width = ?, weight = ? WHERE id = ?"
         self.db.connection.execute(query, (product_id, external_id, variant_name, model, color, size_height, size_width, weight, id))
         self.db.disconnect()
 
-    def delete_product_variant(self, id: int, product_id: int, external_id: str, variant_name: str, model: str, color: str, size_height: float, size_width: float, weight: float):
-        query = "DELETE FROM product_variant WHERE id = ? AND product_id = ? AND external_id = ? AND variant_name = ? AND model = ? AND color = ? AND size_height = ? AND size_width = ? AND weight = ?"
-        self.db.connection.execute(query, (id, product_id, external_id, variant_name, model, color, size_height, size_width, weight))
+    def delete_product_variant_by_id(self, id: int):
+        query = "DELETE FROM product_variant WHERE id = UPPER(?)"
+        self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+
+    def delete_product_variant_by_external_id(self, external_id: str):
+        query = "DELETE FROM product_variant WHERE external_id = UPPER(?)"
+        self.db.connection.execute(query, (external_id,))
+        self.db.disconnect()
+
+    def delete_product_variant_by_variant_name(self, variant_name: str):
+        query = "DELETE FROM product_variant WHERE variant_name = UPPER(?)"
+        self.db.connection.execute(query, (variant_name,))
+        self.db.disconnect()
+
+    def delete_product_variant_by_model(self, model: str):
+        query = "DELETE FROM product_variant WHERE model = UPPER(?)"
+        self.db.connection.execute(query, (model,))
+        self.db.disconnect()
+
+    def delete_product_variant_by_color(self, color: str):
+        query = "DELETE FROM product_variant WHERE color = UPPER(?)"
+        self.db.connection.execute(query, (color,))
+        self.db.disconnect()
+
+    def delete_product_variant_by_size_height(self, size_height: float):
+        query = "DELETE FROM product_variant WHERE size_height = ?"
+        self.db.connection.execute(query, (size_height,))
+        self.db.disconnect()
+
+    def delete_product_variant_by_size_width(self, size_width: float):
+        query = "DELETE FROM product_variant WHERE size_width = ?"
+        self.db.connection.execute(query, (size_width,))
+        self.db.disconnect()
+
+    def delete_product_variant_by_weight(self, weight: float):
+        query = "DELETE FROM product_variant WHERE weight = ?"
+        self.db.connection.execute(query, (weight,))
         self.db.disconnect()
 
 
@@ -133,52 +190,88 @@ class ProductRepository:
         self.db.connection.execute(query, (id, price, price_date, manufacturer, marketplace, product_id))
         self.db.disconnect()
 
-    def get_product_price(self, id: int, price: float, price_date: str, manufacturer: int, marketplace: int, product_id: int):
-        if id is not None:
-            query = "SELECT * FROM product_price WHERE id = ?"
-            result = self.db.connection.execute(query, (id,))
-        elif price is not None:
-            query = "SELECT * FROM product_price WHERE price = ?"
-            result = self.db.connection.execute(query, (price,))
-        elif price_date is not None:
-            query = "SELECT * FROM product_price WHERE price_date = ?"
-            result = self.db.connection.execute(query, (price_date,))
-        elif manufacturer is not None:
-            query = "SELECT * FROM product_price WHERE manufacturer = ?"
-            result = self.db.connection.execute(query, (manufacturer,))
-        elif marketplace is not None:
-            query = "SELECT * FROM product_price WHERE marketplace = ?"
-            result = self.db.connection.execute(query, (marketplace,))
-        elif product_id is not None:
-            query = "SELECT * FROM product_price WHERE product_id = ?"
-            result = self.db.connection.execute(query, (product_id,))
-        else:
-            raise ValueError("At least one parameter must be provided.")
-        
+    def get_product_price_by_id(self, id: int):
+        query = "SELECT * FROM product_price WHERE id = UPPER(?)"
+        result = self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_price_by_price(self, price: float):
+        query = "SELECT * FROM product_price WHERE price = ?"
+        result = self.db.connection.execute(query, (price,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_price_by_price_date(self, price_date: str):
+        query = "SELECT * FROM product_price WHERE price_date = ?"
+        result = self.db.connection.execute(query, (price_date,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_price_by_manufacturer(self, manufacturer: int):
+        query = "SELECT * FROM product_price WHERE manufacturer = ?"
+        result = self.db.connection.execute(query, (manufacturer,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_price_by_marketplace(self, marketplace: int):
+        query = "SELECT * FROM product_price WHERE marketplace = ?"
+        result = self.db.connection.execute(query, (marketplace,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_price_by_product_id(self, product_id: int):
+        query = "SELECT * FROM product_price WHERE product_id = ?"
+        result = self.db.connection.execute(query, (product_id,))
         self.db.disconnect()
         return result if result else None
 
     def get_all_product_prices(self):
         query = "SELECT * FROM product_price"
-        return self.db.fetchall(query)
+        return self.db.fetchone(query)
 
     def update_product_price(self, id: int, price: float, price_date: str, manufacturer: int, marketplace: int, product_id: int):
         query = "UPDATE product_price SET price = ?, price_date = ?, manufacturer = ?, marketplace = ?, product_id = ? WHERE id = ?"
         self.db.connection.execute(query, (price, price_date, manufacturer, marketplace, product_id, id))
         self.db.disconnect()
 
-    def delete_product_price(self, id: int, price: float, price_date: str, manufacturer: int, marketplace: int, product_id: int):
-        query = "DELETE FROM product_price WHERE id = ? AND price = ? AND price_date = ? AND manufacturer = ? AND marketplace = ? AND product_id = ?"
-        self.db.connection.execute(query, (id, price, price_date, manufacturer, marketplace, product_id))
+    def delete_product_price_by_id(self, id: int):
+        query = "DELETE FROM product_price WHERE id = UPPER(?)"
+        self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+
+    def delete_product_price_by_price(self, price: float):
+        query = "DELETE FROM product_price WHERE price = ?"
+        self.db.connection.execute(query, (price,))
+        self.db.disconnect()
+
+    def delete_product_price_by_price_date(self, price_date: str):
+        query = "DELETE FROM product_price WHERE price_date = ?"
+        self.db.connection.execute(query, (price_date,))
+        self.db.disconnect()
+
+    def delete_product_price_by_manufacturer(self, manufacturer: int):
+        query = "DELETE FROM product_price WHERE manufacturer = ?"
+        self.db.connection.execute(query, (manufacturer,))
+        self.db.disconnect()
+
+    def delete_product_price_by_marketplace(self, marketplace: int):
+        query = "DELETE FROM product_price WHERE marketplace = ?"
+        self.db.connection.execute(query, (marketplace,))
+        self.db.disconnect()
+
+    def delete_product_price_by_product_id(self, product_id: int):
+        query = "DELETE FROM product_price WHERE product_id = ?"
+        self.db.connection.execute(query, (product_id,))
         self.db.disconnect()
 
     def get_lowest_product_price(self, product_id: int):
         query = "SELECT * FROM product_price WHERE product_id = ? ORDER BY price_date DESC"
-        return self.db.fetchall(query, (product_id,))
+        return self.db.fetchone(query, (product_id,))
 
     def get_all_product_variants(self, product_id: int):
         query = "SELECT * FROM product_variant WHERE product_id = ?"
-        return self.db.fetchall(query, (product_id,))
+        return self.db.fetchone(query, (product_id,))
 
     def get_product_variant_with_prices(self, product_id: int):
         query = """
@@ -188,7 +281,7 @@ class ProductRepository:
             WHERE pv.product_id = ?
             ORDER BY pp.price_date DESC
         """
-        return self.db.fetchall(query, (product_id,))
+        return self.db.fetchone(query, (product_id,))
 
 
 
@@ -197,41 +290,63 @@ class ProductRepository:
         self.db.connection.execute(query, (id, marketplace_id, external_product_id, product_id))
         self.db.disconnect()
 
-    def get_product_url(self, id: int, marketplace_id: int, external_product_id: str, product_id: int):
-        if id is not None:
-            query = "SELECT * FROM product_url WHERE id = ?"
-            result = self.db.connection.execute(query, (id,))
-        elif marketplace_id is not None:
-            query = "SELECT * FROM product_url WHERE marketplace_id = ?"
-            result = self.db.connection.execute(query, (marketplace_id,))
-        elif external_product_id is not None:
-            query = "SELECT * FROM product_url WHERE external_product_id = ?"
-            result = self.db.connection.execute(query, (external_product_id,))
-        elif product_id is not None:
-            query = "SELECT * FROM product_url WHERE product_id = ?"
-            result = self.db.connection.execute(query, (product_id,))
-        else:
-            raise ValueError("At least one parameter must be provided.")
-        
+    def get_product_url_by_id(self, id: int):
+        query = "SELECT * FROM product_url WHERE id = UPPER(?)"
+        result = self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_url_by_marketplace_id(self, marketplace_id: int):
+        query = "SELECT * FROM product_url WHERE marketplace_id = ?"
+        result = self.db.connection.execute(query, (marketplace_id,))
+        self.db.disconnect()
+        return result if result else None
+
+
+    def get_product_url_by_external_product_id(self, external_product_id: str):
+        query = "SELECT * FROM product_url WHERE external_product_id = UPPER(?)"
+        result = self.db.connection.execute(query, (external_product_id,))
+        self.db.disconnect()
+        return result if result else None
+
+    def get_product_url_by_product_id(self, product_id: int):
+        query = "SELECT * FROM product_url WHERE product_id = ?"
+        result = self.db.connection.execute(query, (product_id,))
         self.db.disconnect()
         return result if result else None
 
     def get_all_product_urls(self):
         query = "SELECT * FROM product_url"
-        return self.db.fetchall(query)
+        return self.db.fetchone(query)
 
     def update_product_url(self, id: int, marketplace_id: int, external_product_id: str, product_id: int):
         query = "UPDATE product_url SET marketplace_id = ?, external_product_id = ?, product_id = ? WHERE id = ?"
         self.db.connection.execute(query, (marketplace_id, external_product_id, product_id, id))
         self.db.disconnect()
 
-    def delete_product_url(self, id: int, marketplace_id: int, external_product_id: str, product_id: int):
-        query = "DELETE FROM product_url WHERE id = ? AND marketplace_id = ? AND external_product_id = ? AND product_id = ?"
-        self.db.connection.execute(query, (id, marketplace_id, external_product_id, product_id))
+    def delete_product_url_by_id(self, id: int):
+        query = "DELETE FROM product_url WHERE id = UPPER(?)"
+        self.db.connection.execute(query, (id,))
         self.db.disconnect()
 
-    
+    def delete_product_url_by_marketplace_id(self, marketplace_id: int):
+        query = "DELETE FROM product_url WHERE marketplace_id = ?"
+        self.db.connection.execute(query, (marketplace_id,))
+        self.db.disconnect()
 
+    def delete_product_url_by_external_product_id(self, external_product_id: str):
+        query = "DELETE FROM product_url WHERE external_product_id = UPPER(?)"
+        self.db.connection.execute(query, (external_product_id,))
+        self.db.disconnect()
+
+    def delete_product_url_by_product_id(self, product_id: int):
+        query = "DELETE FROM product_url WHERE product_id = ?"
+        self.db.connection.execute(query, (product_id,))
+        self.db.disconnect()
+
+
+        
+    
 
 if __name__ == "__main__":
         db = ManageDatabase(db_file_path='./src/database/database.db', schema_file_path='./src/database/schema.sql')
