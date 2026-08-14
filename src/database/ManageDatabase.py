@@ -31,10 +31,9 @@ class ManageDatabase:
 
             self.cursor.executescript(schema_sql)
 
-    def fetchall(self, query, params=None):
+    def fetchone(self, query, params=None):
         if params is None:
             params = []
         self.cursor.execute(query, params)
-        rows = self.cursor.fetchall()
-        return [dict(row) for row in rows]
-    
+        row = self.cursor.fetchone()
+        return dict(row) if row else None
