@@ -9,24 +9,46 @@ class MarketplaceRepository:
         self.db.connection.execute(query, (id, name, url))
         self.db.disconnect()
 
-    def get_marketplace(self, id: int):
-        query = "SELECT * FROM marketplace WHERE id = ?"
+    def get_marketplace_by_id(self, id: int):
+        query = "SELECT * FROM marketplace WHERE id = UPPER(?)"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
+    def get_marketplace_by_name(self, name: str):
+        query = "SELECT * FROM marketplace WHERE UPPER(name) = UPPER(?)"
+        result = self.db.connection.execute(query, (name,))
+        self.db.disconnect()
+        return result.fetchone() if result else None
+
+    def get_marketplace_by_url(self, url: str):
+        query = "SELECT * FROM marketplace WHERE UPPER(url) = UPPER(?)"
+        result = self.db.connection.execute(query, (url,))
+        self.db.disconnect()
+        return result.fetchone() if result else None
+    
     def get_all_marketplaces(self):
         query = "SELECT * FROM marketplace"
-        return self.db.fetchall(query)
+        return self.db.fetchone(query)
 
     def update_marketplace(self, id: int, name: str, url: str):
-        query = "UPDATE marketplace SET name = ?, url = ? WHERE id = ?"
-        self.db.connection.execute(query, (name, url, id))
+        query = "UPDATE marketplace SET id = UPPER(?), name = UPPER(?), url = UPPER(?)"
+        self.db.connection.execute(query, (id, name, url))
         self.db.disconnect()
 
-    def delete_marketplace(self, id: int):
-        query = "DELETE FROM marketplace WHERE id = ?"
+    def delete_marketplace_by_id(self, id: int):
+        query = "DELETE FROM marketplace WHERE id = UPPER(?)"
         self.db.connection.execute(query, (id,))
+        self.db.disconnect()
+
+    def delete_marketplace_by_name(self, name: str):
+        query = "DELETE FROM marketplace WHERE UPPER(name) = UPPER(?)"
+        self.db.connection.execute(query, (name,))
+        self.db.disconnect()
+
+    def delete_marketplace_by_url(self, url: str):
+        query = "DELETE FROM marketplace WHERE UPPER(url) = UPPER(?)"
+        self.db.connection.execute(query, (url,))
         self.db.disconnect()
 
 
@@ -35,5 +57,5 @@ if __name__ == "__main__":
     marketplace_repo = MarketplaceRepository(db)
 
     marketplace_repo.add_marketplace(1234, "ExampleMarketplace", "https://www.example.com")
-    marketplace = marketplace_repo.get_marketplace(1234)
+    marketplace = marketplace_repo.get_marketplace_by_id(1234)
     print(marketplace)
