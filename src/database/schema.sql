@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS marketplace (
     id TEXT PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
-    url VARCHAR(2500)
+    url TEXT NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS manufacturer (
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS product (
 CREATE TABLE IF NOT EXISTS product_variant (
     id TEXT PRIMARY KEY,
     product_id TEXT NOT NULL REFERENCES product(id),
-    external_id VARCHAR(500) UNIQUE,
+    external_id TEXT UNIQUE,
     variant_name VARCHAR(256) NOT NULL,
     model VARCHAR(256) NOT NULL,
     color VARCHAR(100),
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS product_price (
 CREATE TABLE IF NOT EXISTS product_url (
     id TEXT PRIMARY KEY,
     marketplace_id TEXT NOT NULL REFERENCES marketplace(id),
-    external_product_id VARCHAR(500) NOT NULL REFERENCES product(external_id),
+    external_product_id TEXT NOT NULL REFERENCES product(external_id),
     product_id TEXT NOT NULL REFERENCES product(id)
 );
 
