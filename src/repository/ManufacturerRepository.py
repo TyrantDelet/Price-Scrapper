@@ -1,4 +1,7 @@
 import sqlite3
+import pathlib
+import uuid
+
 
 from ..database.ManageDatabase import ManageDatabase
 
@@ -17,6 +20,13 @@ class ManufacturerRepository:
 
     
     def add_manufacturer(self, id: int, name: str):
+        id = str(uuid.uuid4())
+        assert isinstance(name, str), "name must be a string"
+        try:
+            name = str(name).upper
+        except Exception as e:
+            raise ValueError(f"name must be a string: {e}")
+
         query = "INSERT INTO manufacturer (id, name) VALUES (?, ?)"
         self.db.connection.execute(query, (id, name, ))
         self.db.disconnect()
@@ -54,7 +64,7 @@ class ManufacturerRepository:
 
 
 if __name__ == "__main__":
-    db = ManageDatabase(db_file_path='./src/database/database.db', schema_file_path='./src/database/schema.sql')
+    db = ManageDatabase(db_file_path=str(pathlib.Path(__file__).parent / "database.db"), schema_file_path='./src/database/schema.sql')
     manufacturer_repo = ManufacturerRepository(db)
 
     manufacturer_repo.add_manufacturer(1234, "ExampleManufacturer")
