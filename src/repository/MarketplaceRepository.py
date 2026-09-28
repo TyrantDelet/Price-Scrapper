@@ -116,7 +116,7 @@ class MarketplaceRepository:
 
 
 if __name__ == "__main__":
-    db = ManageDatabase(db_file_path=str(pathlib.Path(__file__).parent / "database.db"), schema_file_path='./src/database/schema.sql'))
+    db = ManageDatabase(db_file_path=str(pathlib.Path(__file__).parent / "database.db"), schema_file_path='./src/database/schema.sql')
     marketplace_repo = MarketplaceRepository(db)
 
     marketplace_repo.add_marketplace(1234, "ExampleMarketplace", "https://www.example.com")
