@@ -31,7 +31,7 @@ class ProductRepository:
         self.db.disconnect()
 
     def get_category_by_id(self, id: str):
-        query = "SELECT * FROM category WHERE id = UPPER(?)"
+        query = "SELECT * FROM category WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
         return result if result else None
@@ -47,12 +47,12 @@ class ProductRepository:
         return self.db.fetchone(query)
 
     def update_category(self, id: str, name: str):
-        query = "UPDATE category SET name = UPPER(?) WHERE id = UPPER(?)"
+        query = "UPDATE category SET name = UPPER(?) WHERE id = ?"
         self.db.connection.execute(query, (name, id))
         self.db.disconnect()
 
     def delete_category_by_id(self, id: str):
-        query = "DELETE FROM category WHERE id = UPPER(?)"
+        query = "DELETE FROM category WHERE id = ?"
         self.db.connection.execute(query, (id,))
         self.db.disconnect()
 
@@ -69,7 +69,7 @@ class ProductRepository:
         self.db.disconnect()
 
     def get_product_by_id(self, id: str):
-        query = "SELECT * FROM product WHERE id = UPPER(?)"
+        query = "SELECT * FROM product WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
         return result if result else None
@@ -90,7 +90,7 @@ class ProductRepository:
         self.db.disconnect()
 
     def delete_product_by_id(self, id: str):
-        query = "DELETE FROM product WHERE id = UPPER(?)"
+        query = "DELETE FROM product WHERE id = ?"
         self.db.connection.execute(query, (id,))
         self.db.disconnect()
 
@@ -107,13 +107,13 @@ class ProductRepository:
         self.db.disconnect()
 
     def get_product_variant_by_id(self, id: int):
-        query = "SELECT * FROM product_variant WHERE id = UPPER(?)"
+        query = "SELECT * FROM product_variant WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
         return result if result else None
 
     def get_product_variant_by_external_id(self, external_id: str):
-        query = "SELECT * FROM product_variant WHERE external_id = UPPER(?)"
+        query = "SELECT * FROM product_variant WHERE external_id = ?"
         result = self.db.connection.execute(query, (external_id,))
         self.db.disconnect()
         return result if result else None
@@ -164,12 +164,12 @@ class ProductRepository:
         self.db.disconnect()
 
     def delete_product_variant_by_id(self, id: int):
-        query = "DELETE FROM product_variant WHERE id = UPPER(?)"
+        query = "DELETE FROM product_variant WHERE id = ?"
         self.db.connection.execute(query, (id,))
         self.db.disconnect()
 
     def delete_product_variant_by_external_id(self, external_id: str):
-        query = "DELETE FROM product_variant WHERE external_id = UPPER(?)"
+        query = "DELETE FROM product_variant WHERE external_id = ?"
         self.db.connection.execute(query, (external_id,))
         self.db.disconnect()
 
@@ -211,7 +211,7 @@ class ProductRepository:
         self.db.disconnect()
 
     def get_product_price_by_id(self, id: int):
-        query = "SELECT * FROM product_price WHERE id = UPPER(?)"
+        query = "SELECT * FROM product_price WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
         return result if result else None
@@ -256,7 +256,7 @@ class ProductRepository:
         self.db.disconnect()
 
     def delete_product_price_by_id(self, id: int):
-        query = "DELETE FROM product_price WHERE id = UPPER(?)"
+        query = "DELETE FROM product_price WHERE id = ?"
         self.db.connection.execute(query, (id,))
         self.db.disconnect()
 
@@ -311,7 +311,7 @@ class ProductRepository:
         self.db.disconnect()
 
     def get_product_url_by_id(self, id: int):
-        query = "SELECT * FROM product_url WHERE id = UPPER(?)"
+        query = "SELECT * FROM product_url WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
         return result if result else None
@@ -324,7 +324,7 @@ class ProductRepository:
 
 
     def get_product_url_by_external_product_id(self, external_product_id: str):
-        query = "SELECT * FROM product_url WHERE external_product_id = UPPER(?)"
+        query = "SELECT * FROM product_url WHERE external_product_id = ?"
         result = self.db.connection.execute(query, (external_product_id,))
         self.db.disconnect()
         return result if result else None
@@ -345,7 +345,7 @@ class ProductRepository:
         self.db.disconnect()
 
     def delete_product_url_by_id(self, id: int):
-        query = "DELETE FROM product_url WHERE id = UPPER(?)"
+        query = "DELETE FROM product_url WHERE id = ?"
         self.db.connection.execute(query, (id,))
         self.db.disconnect()
 
@@ -355,7 +355,7 @@ class ProductRepository:
         self.db.disconnect()
 
     def delete_product_url_by_external_product_id(self, external_product_id: str):
-        query = "DELETE FROM product_url WHERE external_product_id = UPPER(?)"
+        query = "DELETE FROM product_url WHERE external_product_id = ?"
         self.db.connection.execute(query, (external_product_id,))
         self.db.disconnect()
 
