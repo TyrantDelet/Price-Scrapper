@@ -10,14 +10,6 @@ class MarketplaceRepository:
         self.connection = sqlite3.Connection
         self.cursor: sqlite3.Cursor
     
-    def fetchone(self, query, params=None):
-            if params is None:
-                params = []
-            self.cursor.execute(query, params)
-            row = self.cursor.fetchone()
-            return dict(row) if row else None
-
-    
     def add_marketplace(self, id: int, name: str, url: str):
         id = str(uuid.uuid4())
         assert isinstance(name, str), "name must be a string"
