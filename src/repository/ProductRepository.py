@@ -1,4 +1,6 @@
 import sqlite3
+import pathlib
+import uuid
 
 from ..database.ManageDatabase import ManageDatabase
 
@@ -16,12 +18,19 @@ class ProductRepository:
             return dict(row) if row else None
 
 
-    def add_category(self, id: int, name: str):
+    def add_category(self, id: str, name: str):
+        id = str(uuid.uuid4())
+        assert isinstance(name, str), "name must be a string"
+        try: 
+            name = str(name).upper()
+        except Exception as e:
+            raise ValueError(f"name must be a string: {e}")
+
         query = "INSERT INTO category (id, name) VALUES (?, ?)"
         self.db.connection.execute(query, (id, name))
         self.db.disconnect()
 
-    def get_category_by_id(self, id: int):
+    def get_category_by_id(self, id: str):
         query = "SELECT * FROM category WHERE id = UPPER(?)"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
@@ -37,12 +46,12 @@ class ProductRepository:
         query = "SELECT * FROM category"
         return self.db.fetchone(query)
 
-    def update_category(self, id: int, name: str):
+    def update_category(self, id: str, name: str):
         query = "UPDATE category SET name = UPPER(?) WHERE id = UPPER(?)"
         self.db.connection.execute(query, (name, id))
         self.db.disconnect()
 
-    def delete_category_by_id(self, id: int):
+    def delete_category_by_id(self, id: str):
         query = "DELETE FROM category WHERE id = UPPER(?)"
         self.db.connection.execute(query, (id,))
         self.db.disconnect()
@@ -54,12 +63,12 @@ class ProductRepository:
 
 
 
-    def add_product(self, id: int, name: str, category: int):
+    def add_product(self, id: str, name: str, category: str):
         query = "INSERT INTO product (id, name, category) VALUES (?, ?, ?)"
         self.db.connection.execute(query, (id, name, category))
         self.db.disconnect()
 
-    def get_product_by_id(self, id: int):
+    def get_product_by_id(self, id: str):
         query = "SELECT * FROM product WHERE id = UPPER(?)"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
@@ -75,12 +84,12 @@ class ProductRepository:
         query = "SELECT * FROM product"
         return self.db.fetchone(query)
 
-    def update_product(self, id: int, name: str, category: int):
+    def update_product(self, id: str, name: str, category: str):
         query = "UPDATE product SET name = ?, category = ? WHERE id = ?"
         self.db.connection.execute(query, (name, category, id))
         self.db.disconnect()
 
-    def delete_product_by_id(self, id: int):
+    def delete_product_by_id(self, id: str):
         query = "DELETE FROM product WHERE id = UPPER(?)"
         self.db.connection.execute(query, (id,))
         self.db.disconnect()
@@ -360,7 +369,7 @@ class ProductRepository:
     
 
 if __name__ == "__main__":
-        db = ManageDatabase(db_file_path='./src/database/database.db', schema_file_path='./src/database/schema.sql')
+        db = ManageDatabase(db_file_path=str(pathlib.Path(__file__).parent / "database.db"), schema_file_path='./src/database/schema.sql')
         product_repo = ProductRepository(db)
 
         product_repo.add_category(1234, "ExampleCategory")
