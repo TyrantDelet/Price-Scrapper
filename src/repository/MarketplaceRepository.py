@@ -31,7 +31,7 @@ class MarketplaceRepository:
         self.db.disconnect()
 
     def get_marketplace_by_id(self, id: int):
-        query = "SELECT * FROM marketplace WHERE id = UPPER(?)"
+        query = "SELECT * FROM marketplace WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
         return result.fetchone() if result else None
@@ -53,12 +53,12 @@ class MarketplaceRepository:
         return self.db.fetchone(query)
 
     def update_marketplace(self, id: int, name: str, url: str):
-        query = "UPDATE marketplace SET id = UPPER(?), name = UPPER(?), url = UPPER(?)"
+        query = "UPDATE marketplace SET id = ?, name = UPPER(?), url = UPPER(?)"
         self.db.connection.execute(query, (id, name, url))
         self.db.disconnect()
 
     def delete_marketplace_by_id(self, id: int):
-        query = "DELETE FROM marketplace WHERE id = UPPER(?)"
+        query = "DELETE FROM marketplace WHERE id = ?"
         self.db.connection.execute(query, (id,))
         self.db.disconnect()
 
