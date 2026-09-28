@@ -1,4 +1,6 @@
 import sqlite3
+import pathlib
+import uuid
 
 from ..database.ManageDatabase import ManageDatabase
 
@@ -17,6 +19,13 @@ class MarketplaceRepository:
 
     
     def add_marketplace(self, id: int, name: str, url: str):
+        id = str(uuid.uuid4())
+        assert isinstance(name, str), "name must be a string"
+        try:
+            name = str(name).upper 
+        except Exception as e:
+            raise ValueError(f"name must be a string: {e}")
+
         query = "INSERT INTO marketplace (id, name, url) VALUES (?, ?, ?)"
         self.db.connection.execute(query, (id, name, url))
         self.db.disconnect()
@@ -65,7 +74,7 @@ class MarketplaceRepository:
 
 
 if __name__ == "__main__":
-    db = ManageDatabase(db_file_path='./src/database/database.db', schema_file_path='./src/database/schema.sql')
+    db = ManageDatabase(db_file_path=str(pathlib.Path(__file__).parent / "database.db"), schema_file_path='./src/database/schema.sql'))
     marketplace_repo = MarketplaceRepository(db)
 
     marketplace_repo.add_marketplace(1234, "ExampleMarketplace", "https://www.example.com")
