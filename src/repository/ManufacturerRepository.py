@@ -32,7 +32,7 @@ class ManufacturerRepository:
         self.db.disconnect()
 
     def get_manufacturer_by_id(self, id: int):
-        query = "SELECT * FROM manufacturer WHERE id = UPPER(?)"
+        query = "SELECT * FROM manufacturer WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
         return result.fetchone() if result else None
@@ -48,12 +48,12 @@ class ManufacturerRepository:
         return self.db.fetchone(query)
 
     def update_manufacturer(self, id: int, name: str):
-        query = "UPDATE manufacturer SET name = UPPER(?) WHERE id = UPPER(?)"
+        query = "UPDATE manufacturer SET name = UPPER(?) WHERE id = ?"
         self.db.connection.execute(query, (name, id))
         self.db.disconnect()
 
     def delete_manufacturer_by_id(self, id: int):
-        query = "DELETE FROM manufacturer WHERE id = UPPER(?)"
+        query = "DELETE FROM manufacturer WHERE id = ?"
         self.db.connection.execute(query, (id,))
         self.db.disconnect()
 
