@@ -34,7 +34,7 @@ class ProductRepository:
         query = "SELECT * FROM category WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_category_by_name(self, name: str):
         assert isinstance(name, str), "name must be a string"
@@ -46,11 +46,11 @@ class ProductRepository:
         query = "SELECT * FROM category WHERE name = UPPER(?)"
         result = self.db.connection.execute(query, (name,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_all_categories(self):
         query = "SELECT * FROM category"
-        return self.db.fetchone(query)
+        return self.db.connection.execute(query).fetchall()
 
     def update_category(self, id: str, name: str):
         assert isinstance(id, str), "id must be a string"
@@ -116,7 +116,7 @@ class ProductRepository:
         query = "SELECT * FROM product WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_by_name(self, name: str):
         assert isinstance(name, str), "name must be a string"
@@ -128,11 +128,11 @@ class ProductRepository:
         query = "SELECT * FROM product WHERE name = UPPER(?)"
         result = self.db.connection.execute(query, (name,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_all_products(self):
         query = "SELECT * FROM product"
-        return self.db.fetchone(query)
+        return self.db.connection.execute(query).fetchall()
 
     def update_product(self, id: str, name: str, category: str):
         assert isinstance(id, str), "id must be a string"
@@ -216,7 +216,7 @@ class ProductRepository:
         query = "SELECT * FROM product_variant WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_variant_by_external_id(self, external_id: str):
         external_id = str(uuid.uuid4())
@@ -229,7 +229,7 @@ class ProductRepository:
         query = "SELECT * FROM product_variant WHERE external_id = ?"
         result = self.db.connection.execute(query, (external_id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_variant_by_variant_name(self, variant_name: str):
         variant_name = str(uuid.uuid4())
@@ -242,7 +242,7 @@ class ProductRepository:
         query = "SELECT * FROM product_variant WHERE variant_name = UPPER(?)"
         result = self.db.connection.execute(query, (variant_name,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_variant_by_model(self, model: str):
         model = str(uuid.uuid4())
@@ -255,7 +255,7 @@ class ProductRepository:
         query = "SELECT * FROM product_variant WHERE model = UPPER(?)"
         result = self.db.connection.execute(query, (model,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_variant_by_color(self, color: str):
         color = str(uuid.uuid4())
@@ -268,7 +268,7 @@ class ProductRepository:
         query = "SELECT * FROM product_variant WHERE color = UPPER(?)"
         result = self.db.connection.execute(query, (color,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_variant_by_size_height(self, size_height: float):
         assert isinstance(size_height, float), "size_height must be a float"
@@ -280,7 +280,7 @@ class ProductRepository:
         query = "SELECT * FROM product_variant WHERE size_height = ?"
         result = self.db.connection.execute(query, (size_height,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_variant_by_size_width(self, size_width: float):
         assert isinstance(size_width, float), "size_width must be a float"
@@ -292,7 +292,7 @@ class ProductRepository:
         query = "SELECT * FROM product_variant WHERE size_width = ?"
         result = self.db.connection.execute(query, (size_width,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_variant_by_weight(self, weight: float):
         assert isinstance(weight, float), "weight must be a float"
@@ -304,11 +304,11 @@ class ProductRepository:
         query = "SELECT * FROM product_variant WHERE weight = ?"
         result = self.db.connection.execute(query, (weight,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_all_product_variants(self):
         query = "SELECT * FROM product_variant"
-        return self.db.fetchone(query)
+        return self.db.connection.execute(query).fetchall()
 
     def update_product_variant(self, id: int, product_id: int, external_id: str, variant_name: str, model: str, color: str, size_height: float, size_width: float, weight: float):
         assert isinstance(id, int), "id must be an integer"
@@ -464,7 +464,7 @@ class ProductRepository:
         query = "SELECT * FROM product_price WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_price_by_price(self, price: float):
         assert isinstance(price, float), "price must be a float"
@@ -476,7 +476,7 @@ class ProductRepository:
         query = "SELECT * FROM product_price WHERE price = ?"
         result = self.db.connection.execute(query, (price,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_price_by_price_date(self, price_date: str):
         assert isinstance(price_date, str), "price_date must be a string"
@@ -488,7 +488,7 @@ class ProductRepository:
         query = "SELECT * FROM product_price WHERE price_date = ?"
         result = self.db.connection.execute(query, (price_date,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_price_by_manufacturer(self, manufacturer: str):
         assert isinstance(manufacturer, str), "manufacturer must be a string"
@@ -500,7 +500,7 @@ class ProductRepository:
         query = "SELECT * FROM product_price WHERE manufacturer = ?"
         result = self.db.connection.execute(query, (manufacturer,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_price_by_marketplace(self, marketplace: str):
         assert isinstance(marketplace, str), "marketplace must be a string"
@@ -512,7 +512,7 @@ class ProductRepository:
         query = "SELECT * FROM product_price WHERE marketplace = ?"
         result = self.db.connection.execute(query, (marketplace,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_price_by_product_id(self, product_id: str):
         assert isinstance(product_id, str), "product_id must be a string"
@@ -524,11 +524,11 @@ class ProductRepository:
         query = "SELECT * FROM product_price WHERE product_id = ?"
         result = self.db.connection.execute(query, (product_id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_all_product_prices(self):
         query = "SELECT * FROM product_price"
-        return self.db.fetchone(query)
+        return self.db.connection.execute(query).fetchall()
 
     def update_product_price(self, id: str, price: float, price_date: str, manufacturer: str, marketplace: str, product_id: str):
         assert isinstance(id, str), "id must be a string"
@@ -629,7 +629,7 @@ class ProductRepository:
             raise ValueError(f"product_id must be a string: {e}")
         
         query = "SELECT * FROM product_price WHERE product_id = ? ORDER BY price_date DESC"
-        return self.db.fetchone(query, (product_id,))
+        return self.db.connection.execute(query, (product_id,)).fetchone()
 
     def get_all_product_variants(self, product_id: str):
         product_id = str(uuid.uuid4())
@@ -641,7 +641,7 @@ class ProductRepository:
             raise ValueError(f"product_id must be a string: {e}")
 
         query = "SELECT * FROM product_variant WHERE product_id = ?"
-        return self.db.fetchone(query, (product_id,))
+        return self.db.connection.execute(query, (product_id,)).fetchall()
 
     def get_product_variant_with_prices(self, product_id: str):
         product_id = str(uuid.uuid4())
@@ -659,7 +659,7 @@ class ProductRepository:
             WHERE pv.product_id = ?
             ORDER BY pp.price_date DESC
         """
-        return self.db.fetchone(query, (product_id,))
+        return self.db.connection.execute(query, (product_id,)).fetchone()
 
 
 
@@ -695,7 +695,7 @@ class ProductRepository:
         query = "SELECT * FROM product_url WHERE id = ?"
         result = self.db.connection.execute(query, (id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_url_by_marketplace_id(self, marketplace_id: str):
         assert isinstance(marketplace_id, str), "marketplace_id must be a string"
@@ -707,7 +707,7 @@ class ProductRepository:
         query = "SELECT * FROM product_url WHERE marketplace_id = ?"
         result = self.db.connection.execute(query, (marketplace_id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
 
     def get_product_url_by_external_product_id(self, external_product_id: str):
@@ -720,7 +720,7 @@ class ProductRepository:
         query = "SELECT * FROM product_url WHERE external_product_id = ?"
         result = self.db.connection.execute(query, (external_product_id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_product_url_by_product_id(self, product_id: str):
         assert isinstance(product_id, str), "product_id must be a string"
@@ -732,11 +732,11 @@ class ProductRepository:
         query = "SELECT * FROM product_url WHERE product_id = ?"
         result = self.db.connection.execute(query, (product_id,))
         self.db.disconnect()
-        return result if result else None
+        return result.fetchone() if result else None
 
     def get_all_product_urls(self):
         query = "SELECT * FROM product_url"
-        return self.db.fetchone(query)
+        return self.db.connection.execute(query).fetchall()
 
     def update_product_url(self, id: str, marketplace_id: str, external_product_id: str, product_id: str):
         assert isinstance(id, str), "id must be a string"
