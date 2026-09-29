@@ -20,7 +20,7 @@ class ManufacturerRepository:
             raise ValueError(f"name must be a string: {e}")
 
         query = "INSERT INTO manufacturer (id, name) VALUES (?, ?)"
-        self.db.connection.execute(query, (id, name, ))
+        self.db.connection.execute(query, (id, name,))
         self.db.disconnect()
 
     def get_manufacturer_by_id(self, id: str):
@@ -49,7 +49,7 @@ class ManufacturerRepository:
 
     def get_all_manufacturers(self):
         query = "SELECT * FROM manufacturer"
-        return self.db.fetchone(query)
+        return self.db.connection.execute(query).fetchall()
 
     def update_manufacturer(self, id: str, name: str):
         assert isinstance(id, str), "id must be a string"
