@@ -64,7 +64,7 @@ class MarketplaceRepository:
     
     def get_all_marketplaces(self):
         query = "SELECT * FROM marketplace"
-        return self.db.fetchone(query)
+        return self.db.connection.execute(query).fetchall()
 
     def update_marketplace(self, id: str, name: str, url: str):
         assert isinstance(id, str), "id must be a string"
